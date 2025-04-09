@@ -1,19 +1,705 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js"></script>
-  <title>My Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山田太郎 - Webエンジニアポートフォリオ</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2c3e50;
+      --accent-color: #e74c3c;
+      --light-bg: #f5f7fa;
+      --dark-text: #333;
+      --light-text: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-text);
+      background-color: var(--light-bg);
+    }
+    
+    header {
+      background-color: var(--secondary-color);
+      color: var(--light-text);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .profile-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
+    }
+    
+    .profile-info h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+    
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    nav {
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .nav-container ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-container li a {
+      display: block;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    
+    .nav-container li a:hover {
+      color: var(--primary-color);
+    }
+    
+    section {
+      padding: 5rem 2rem;
+    }
+    
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--secondary-color);
+    }
+    
+    .section-title h2 {
+      font-size: 2rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+    
+    #about {
+      background-color: white;
+    }
+    
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .skills {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .skill-category h3 {
+      margin-bottom: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .skill-item {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    
+    #projects {
+      background-color: var(--light-bg);
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    
+    .project-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .project-image {
+      height: 200px;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+    }
+    
+    .project-info {
+      padding: 1.5rem;
+    }
+    
+    .project-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    
+    .project-tag {
+      background-color: var(--light-bg);
+      color: var(--secondary-color);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .project-links a {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    
+    .project-links a:hover {
+      color: var(--accent-color);
+    }
+    
+    #experience {
+      background-color: white;
+    }
+    
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(50% - 1px);
+      width: 2px;
+      height: 100%;
+      background-color: #ddd;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      padding-right: calc(50% + 2rem);
+    }
+    
+    .timeline-item:nth-child(even) {
+      padding-left: calc(50% + 2rem);
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      border: 4px solid white;
+    }
+    
+    .timeline-content {
+      background-color: var(--light-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    .timeline-date {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-title {
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    #contact {
+      background-color: var(--light-bg);
+    }
+    
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .contact-form {
+      width: 100%;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: var(--secondary-color);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .submit-btn:hover {
+      background-color: #2980b9;
+    }
+    
+    footer {
+      background-color: var(--secondary-color);
+      color: var(--light-text);
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-nav {
+      margin: 1rem 0;
+    }
+    
+    .footer-nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .footer-nav a {
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-nav a:hover {
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 30px;
+      }
+      
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        padding-left: 80px;
+        padding-right: 0;
+      }
+      
+      .timeline-dot {
+        left: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>GitHubの新機能</h1>
-<p>docsフォルダでGitHub Pageが公開できる。</p>
-<figure>
-  <img src="images/animal1.jpg" alt="">
-</figure>
+  <header>
+    <div class="header-content">
+      <div class="profile-container">
+        <div class="profile-image">
+          プロフィール画像
+        </div>
+        <div class="profile-info">
+          <h1>山田 太郎</h1>
+          <p class="tagline">フルスタックWebエンジニア / UI/UXデザイナー</p>
+          <div class="social-links">
+            <a href="#" title="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="#" title="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="#" title="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="#about">自己紹介</a></li>
+        <li><a href="#projects">プロジェクト</a></li>
+        <li><a href="#experience">職務経歴</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <section id="about">
+    <div class="section-container">
+      <div class="section-title">
+        <h2>自己紹介</h2>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>東京を拠点に活動するWebエンジニアです。5年以上のフロントエンド開発経験と3年のバックエンド開発経験を持ち、モダンなWebアプリケーション開発に情熱を注いでいます。</p>
+          <p>ユーザー体験を最優先に考え、クリーンで保守性の高いコードを書くことを心がけています。新しい技術にも積極的に取り組み、チームでの開発経験も豊富です。</p>
+          <p>趣味はテックカンファレンスへの参加と、オープンソースプロジェクトへの貢献です。日々の学びを大切にし、常にスキルアップを目指しています。</p>
+        </div>
+        <div class="skills">
+          <div class="skill-category">
+            <h3>フロントエンド</h3>
+            <div class="skill-list">
+              <span class="skill-item">HTML5</span>
+              <span class="skill-item">CSS3</span>
+              <span class="skill-item">JavaScript</span>
+              <span class="skill-item">TypeScript</span>
+              <span class="skill-item">React</span>
+              <span class="skill-item">Vue.js</span>
+              <span class="skill-item">Next.js</span>
+              <span class="skill-item">Tailwind CSS</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>バックエンド</h3>
+            <div class="skill-list">
+              <span class="skill-item">Node.js</span>
+              <span class="skill-item">Express</span>
+              <span class="skill-item">PHP</span>
+              <span class="skill-item">Laravel</span>
+              <span class="skill-item">Python</span>
+              <span class="skill-item">Django</span>
+              <span class="skill-item">MySQL</span>
+              <span class="skill-item">MongoDB</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>ツール・その他</h3>
+            <div class="skill-list">
+              <span class="skill-item">Git</span>
+              <span class="skill-item">Docker</span>
+              <span class="skill-item">AWS</span>
+              <span class="skill-item">Firebase</span>
+              <span class="skill-item">Figma</span>
+              <span class="skill-item">Adobe XD</span>
+              <span class="skill-item">Jest</span>
+              <span class="skill-item">Cypress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="projects">
+    <div class="section-container">
+      <div class="section-title">
+        <h2>プロジェクト</h2>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image">プロジェクト画像</div>
+          <div class="project-info">
+            <h3 class="project-title">オンライン学習プラットフォーム</h3>
+            <p>ReactとNode.jsを使用したフルスタックプロジェクト。動画コンテンツ、インタラクティブなクイズ、進捗管理機能を備えた教育サービス。</p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">MongoDB</span>
+              <span class="project-tag">AWS</span>
+            </div>
+            <div class="project-links">
+              <a href="#">デモを見る</a>
+              <a href="#">ソースコード</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-image">プロジェクト画像</div>
+          <div class="project-info">
+            <h3 class="project-title">ECサイトリニューアル</h3>
+            <p>既存のECサイトを最新技術でリニューアル。パフォーマンス最適化によりページ読み込み時間を60%削減。売上30%アップに貢献。</p>
+            <div class="project-tags">
+              <span class="project-tag">Vue.js</span>
+              <span class="project-tag">Laravel</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="#">デモを見る</a>
+              <a href="#">ケーススタディ</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-image">プロジェクト画像</div>
+          <div class="project-info">
+            <h3 class="project-title">予約管理システム</h3>
+            <p>美容室向けのカスタム予約管理システム。リアルタイム更新、顧客管理、自動リマインダー機能搭載。月間予約数20%増加を実現。</p>
+            <div class="project-tags">
+              <span class="project-tag">Next.js</span>
+              <span class="project-tag">TypeScript</span>
+              <span class="project-tag">Firebase</span>
+              <span class="project-tag">Tailwind CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="#">デモを見る</a>
+              <a href="#">ソースコード</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="experience">
+    <div class="section-container">
+      <div class="section-title">
+        <h2>職務経歴</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">2023年 - 現在</div>
+            <h3 class="timeline-title">シニアフロントエンドエンジニア | テックイノベーション株式会社</h3>
+            <p>大規模Webアプリケーションのフロントエンド開発をリード。React、TypeScriptを活用した開発基盤の整備。5名のチームマネジメントも担当。</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">2021年 - 2023年</div>
+            <h3 class="timeline-title">フルスタックエンジニア | スタートアップテクノロジー株式会社</h3>
+            <p>ECサイトやSaaSプロダクトの開発に従事。Vue.js、Laravel、AWSを駆使したアプリケーション開発。パフォーマンス最適化やセキュリティ対策も担当。</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">2019年 - 2021年</div>
+            <h3 class="timeline-title">Webデベロッパー | デジタルソリューションズ株式会社</h3>
+            <p>コーポレートサイトやランディングページの制作。HTML、CSS、JavaScript、WordPressを活用したWeb制作。クライアントとの打ち合わせからデプロイまで一貫して担当。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact">
+    <div class="section-container">
+      <div class="section-title">
+        <h2>お問い合わせ</h2>
+      </div>
+      <div class="contact-container">
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">お名前</label>
+            <input type="text" id="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">件名</label>
+            <input type="text" id="subject" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="message">メッセージ</label>
+            <textarea id="message" class="form-control" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">送信する</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="social-links">
+        <a href="#" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        </a>
+        <a href="#" title="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        </a>
+        <a href="#" title="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+        </a>
+      </div>
+      <div class="footer-nav">
+        <ul>
+          <li><a href="#about">自己紹介</a></li>
+          <li><a href="#projects">プロジェクト</a></li>
+          <li><a href="#experience">職務経歴</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <div class="copyright">
+        &copy; 2025 山田太郎. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
